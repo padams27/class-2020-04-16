@@ -46,7 +46,24 @@ We are using the [**tidymodels** collection of packages](https://www.tidymodels.
 
 Useful functions include `logistic_reg()`, `set_engine()`, and `fit()`.
 
+
+```{r}
+
+logistic_mod <- logistic_reg() %>% 
+  set_engine("glm")
+
+logistic_fit <- fit(logistic_mod, factor(vote) ~ ideology * income * gender * race, data = nes)
+
+logistic_fit$fit %>% 
+  tidy(conf.int = TRUE) %>%  
+  select(term, estimate, conf.low, conf.high)
+
+```
+
+
 Interpret the coefficient of `income`.
+
+increse income by 1 and hold all else the same then chance of voting dem decreases by 0.695 / 4
 
 Write a sentence to your smart-but-not-mathematical boss which explains the association of income with preference for the Democratic candidate. Include a notion of uncertainty.
 
